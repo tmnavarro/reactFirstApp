@@ -95,15 +95,126 @@ process.chdir = function (dir) {
 process.umask = function() { return 0; };
 
 },{}],2:[function(require,module,exports){
-// main.js
-var React = require('react');
-var ReactDOM = require('react-dom');
+/*
+ * Main da aplicação
+ * Reune todas as chamadas de dependencias do projeto
+ * além de configuração básicas.
+ * Obs.: Deve ser compilado com 'browserify'
+ */
+let React = require('react');
+let ReactDOM = require('react-dom');
 
-ReactDOM.render(React.createElement(
-  'h1',
-  null,
-  'Hello, world OLASDLAS!'
-), document.getElementById('g-content'));
+//Class Principal
+const DaySales = React.createClass({
+	displayName: 'DaySales',
+
+	render: () => {
+		return React.createElement(
+			'div',
+			null,
+			React.createElement(
+				'h1',
+				null,
+				'Vendas diarias'
+			),
+			React.createElement(SalesTable, null),
+			React.createElement(SalesForm, null)
+		);
+	}
+
+});
+
+//Class tabela de produtos registrados
+const SalesTable = React.createClass({
+	displayName: 'SalesTable',
+
+	render: () => {
+		return React.createElement(
+			'table',
+			null,
+			React.createElement(
+				'thead',
+				null,
+				React.createElement(
+					'tr',
+					null,
+					React.createElement(
+						'th',
+						null,
+						'Produto'
+					),
+					React.createElement(
+						'th',
+						null,
+						'Valor'
+					),
+					React.createElement(
+						'th',
+						null,
+						'Quantidade'
+					),
+					React.createElement(
+						'th',
+						null,
+						'Total'
+					)
+				)
+			),
+			React.createElement(
+				'tbody',
+				null,
+				React.createElement(
+					'tr',
+					null,
+					React.createElement('td', null)
+				)
+			),
+			React.createElement(
+				'tfoot',
+				null,
+				React.createElement(
+					'tr',
+					null,
+					React.createElement('td', null),
+					React.createElement('td', null),
+					React.createElement(
+						'td',
+						{ rowspan: '3', 'class': 'nova' },
+						'Valor Total:'
+					),
+					React.createElement(
+						'th',
+						null,
+						'R$..,..'
+					)
+				)
+			)
+		);
+	}
+});
+
+//Class formulário de registro
+const SalesForm = React.createClass({
+	displayName: 'SalesForm',
+
+	render: () => {
+		return React.createElement(
+			'form',
+			null,
+			React.createElement('input', { type: 'text', placeholder: 'Nome do Produto' }),
+			React.createElement('input', { type: 'text', placeholder: 'Valor' }),
+			React.createElement('input', { type: 'number', placeholder: 'Quantidade' }),
+			React.createElement(
+				'button',
+				{ type: 'submit' },
+				' Registrar '
+			)
+		);
+	}
+});
+
+//Rederização de template na elemento com id #id-content
+ReactDOM.render(React.createElement(DaySales, null), document.getElementById('g-content'));
 
 },{"react":168,"react-dom":30}],3:[function(require,module,exports){
 (function (process){
