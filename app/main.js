@@ -3,17 +3,36 @@
  * Reune todas as chamadas de dependencias do projeto
  * além de configuração básicas.
  * Obs.: Deve ser compilado com 'browserify'
+ *
+ * Autor: Túlio Navarro
+ *
  */
-let React = require('react');
-let ReactDOM = require('react-dom');
+
+const React = require('react');
+const ReactDOM = require('react-dom');
+
+//Dados de teste
+let sales = [
+	  { name: 'Cerveja Verde', price: 10.00, ammount: 2}
+	, { name: 'Cerveja Vermelha', price: 15.50, ammount: 1}
+	, { name: 'Cerveja Capim', price: 5.90, ammount: 4}
+];
 
 //Class Principal
 const DaySales = React.createClass({ 
+
+	getInitialState: () => {
+		return {
+			count: 0
+			};
+	},
+
 	render: () => {
+		console.log(this.props.sales);
 		return(
 			<div>
 				<h1>Vendas diarias</h1>
-				<SalesTable/>
+				<SalesTable sales={ this.props.sales }/>
 				<SalesForm/>
 			</div>
 		);
@@ -21,7 +40,7 @@ const DaySales = React.createClass({
 
 });
 
-//Class tabela de produtos registrados
+
 const SalesTable = React.createClass({
 	render: () => {
 		return(
@@ -35,9 +54,7 @@ const SalesTable = React.createClass({
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td></td>
-					</tr>
+					<Products/>
 				</tbody>
 				<tfoot>
 					<tr>
@@ -67,8 +84,35 @@ const SalesForm = React.createClass({
 	}
 });
 
+//Class de tbody ta tabela de produtos
+const Products = React.createClass({
+	render: () => {
+
+		let productNodes = this.sales.map(function (product) {
+            return (
+            	<tr>
+					<td>{product.name}</td>
+				</tr>
+            	);
+        });
+
+		return(
+			{productNodes}
+		);		
+	}
+});
+
+/*
+const Product = React.createClass({
+	return(
+		<tr>
+		<td> </td>
+		</tr>
+		);
+});*/
+
 //Rederização de template na elemento com id #id-content
 ReactDOM.render(
-	<DaySales/>,
+	<DaySales  sales={sales} />,
 	document.getElementById('g-content')
 );
